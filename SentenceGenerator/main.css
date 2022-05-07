@@ -1,0 +1,28 @@
+.backgr{
+    background-color: rgb(2, 2, 2);
+}
+
+.dark_text{
+    color: rgb(226, 226, 226);
+}
+
+.header{
+    font-size: 40px;
+    font-style: bold;
+}
+.paragraph {
+    font-size: 35px;
+}
+
+
+.contentDiv{
+    text-align: center;
+    margin: 0 auto;
+    position: relative;
+    top: 100px;
+    /*border:solid 1px rgb(255, 255, 255);*/
+}
+
+.space{
+    margin-bottom: 3cm;
+}
