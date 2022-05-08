@@ -1,29 +1,25 @@
-var textOJ
-var Words;
-var adjectiveProb = 0.1;
 //Noun-Source: https://eslgrammar.org/list-of-nouns/ 
 //Verb-Source: https://www.englishbix.com/verb-forms-v1-v2-v3-list/
 //Adjective-Source: https://www.mobap.edu/wp-content/uploads/2013/01/list_of_adjectives.pdf
+var Words;
+var adjectiveProb = 0.1;
 
 async function fetchWords() {
-    let response = await fetch('./Words.json');
+    let response = await fetch("/Words.json");//use absolute path to always find words
     Words = await response.json();
 }
+await fetchWords();//ALWAYS load the word data first (also when imported)
+
 
 function RndInt(count) { return Math.floor(Math.random()*count); }
-function pickRandom(array){ return array[RndInt(array.length)]; }
+export function pickRandom(array){ return array[RndInt(array.length)]; }
 
-async function loaded(){
-    textOJ = document.getElementById("text");
-    await fetchWords();//load data
-    generate();
+
+export function generate(){
+    return toSentence(fillTemplate(pickRandom(Words.Template)));
 }
 
-function generate(){
-    textOJ.innerHTML = toSentence(fillTemplate(pickRandom(Words.Template)));
-}
-
-function fillTemplate(text){
+export default function fillTemplate(text, pickMethod = function(W, c) { return pickRandom(W[c]); }){
     let i = text.indexOf("@");
     while(i != -1){
         let s = findNextNonLetter(text, i+1);//get next non-letter character
@@ -34,7 +30,7 @@ function fillTemplate(text){
         let insert = "";
         switch(category){
             default:
-                insert = pickRandom(Words[category]);
+                insert = pickMethod(Words, category);
                 break;
         }
         
@@ -70,6 +66,7 @@ function fillTemplate(text){
     return text;
 }
 
+  
 function getArticle(next){
     let firstChar = next.charAt(0);
     if("aeiou".includes(firstChar)){//if character is a noun
