@@ -5,7 +5,7 @@ var Words;
 var adjectiveProb = 0.1;
 
 async function fetchWords() {
-    let response = await fetch("/Words.json");//use absolute path to always find words
+    let response = await fetch("SentenceGenerator/Words.json");//use absolute path to always find words
     Words = await response.json();
 }
 await fetchWords();//ALWAYS load the word data first (also when imported)
