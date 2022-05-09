@@ -5,7 +5,11 @@ var Words;
 var adjectiveProb = 0.1;
 
 async function fetchWords() {
-    let response = await fetch("./Words.json");//use absolute path to always find words
+    var scripts= document.getElementsByTagName('script');
+    var path= scripts[scripts.length-1].src.split('?')[0];      // remove any ?query        NOTE: because this is at load time, we are the last script that was loaded
+    var mydir= path.split('/').slice(0, -1).join('/')+'/';  // remove last filename part of path
+
+    let response = await fetch(mydir + "Words.json");//use absolute path to always find words
     Words = await response.json();
 }
 await fetchWords();//ALWAYS load the word data first (also when imported)
