@@ -1,41 +1,61 @@
-import {generate as genSentence, pickRandom, fetchWords, setAdjProb} from "../Generator.js";
-await fetchWords('../Words.json');
-setAdjProb(0);//disable random adjectives -> add them to generated objects and characters
+import Generator, { pickRandom, RndInt , toSentence } from "../Generator.js";
 
-var textOJ;
-document.getElementById("generateB").onclick = function() { generate(); };
-
-loaded();
-
-async function loaded(){
-    textOJ = document.getElementById("text");
-    generate();
-}
+export default class StoryGenerator extends Generator{
+    //array of Actors sorted by importance (first character -> main char)
+    Chars;
+    Objs;
 
 
-//array of Actors sorted by importance (first character -> main char)
-var Chars;
-var Objs;
+    pickMethod(category){
+        if(category == "Character")
+            return this.pickBySortedImportance(this.Chars, () => { return pickRandom(this.Words[category]); });
 
-function pickMethod(Words, category){
-    if(category == "Character"){
-        //TODO: pick a character with lowering probability, the higher the index is
-        //TODO: if the list doesnt have this character jet, add the character (maybe add also a fixed adjective)
+        //if(category == "Object")
+            //return this.pickBySortedImportance(this.Objs, () => { return pickRandom(this.Words[category]); });
+        if(category == "Template")
+            return this.Words.Template[RndInt(this.Words.StoryTemplate)];//only pick story templates
+
+        //else:
+        return pickRandom(this.Words[category]);
     }
 
-    if(category == "Object"){
-        //TODO: analog to character
+    generateStory(sentenceCount){
+        this.Chars = [];
+        this.Objs = [];
+
+        let result = "";
+        for(let i = 0; i < sentenceCount; i++){
+            result += this.generate() + " ";
+        }
+        return result;
     }
 
-    //else:
-    return pickRandom(Words[category]);
-}
-
-function generate(){
-    let sentenceCount = document.getElementById("SentenceCount").value;
-    let result = "";
-    for(let i = 0; i < sentenceCount; i++){
-        result += genSentence(pickMethod) + " ";
+    generate(){
+        let templ = this.pickMethod("Template");
+        return toSentence(this.fillTemplate(templ));
     }
-    textOJ.innerHTML = result;
+
+    
+    prob(i){ return 0.5/i; }//the sum to infinity is 1
+
+    pickBySortedImportance(array, createElement){
+        let r = Math.random();
+        let sum = 0;
+        for(let i = 0; i < array.length; i++){
+            sum += this.prob(i);//pick a Element with lowering probability, the higher the index is
+            if(r < sum)
+                return array[i];
+        }
+        
+        let newElement = createElement();//if the list doesnt have this Element jet, add the Element
+        array.push(newElement);
+        return newElement;
+    }
+
+
+    //------------------- ARTICLES ----------------------------
+
+    getArticle(next){
+        return "the";
+    }
 }
