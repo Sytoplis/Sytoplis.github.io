@@ -9,6 +9,7 @@ async function fetchWords() {
     var path= scripts[scripts.length-1].src.split('?')[0];      // remove any ?query        NOTE: because this is at load time, we are the last script that was loaded
     var mydir= path.split('/').slice(0, -1).join('/')+'/';  // remove last filename part of path
 
+    console.log("trying to load:" + mydir + "Words.json");
     let response = await fetch(mydir + "Words.json");//use absolute path to always find words
     Words = await response.json();
 }
