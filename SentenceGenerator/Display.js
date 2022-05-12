@@ -1,4 +1,6 @@
-import {generate as generateSentence} from "./Generator.js";
+import {generate as generateSentence, fetchWords} from "./Generator.js";
+await fetchWords('./Words.json');
+
 var textOJ;
 document.getElementById("generateB").onclick = function() { generate(); };
 
