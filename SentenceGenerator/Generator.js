@@ -11,12 +11,15 @@ export async function fetchWords(path) {
 //await fetchWords();//ALWAYS load the word data first (also when imported)
 
 
+export function setAdjProb(prob){ adjectiveProb = prob; }
+
+
 function RndInt(count) { return Math.floor(Math.random()*count); }
 export function pickRandom(array){ return array[RndInt(array.length)]; }
 
 
-export function generate(){
-    return toSentence(fillTemplate(pickRandom(Words.Template)));
+export function generate(pickMethod = function(W, c) { return pickRandom(W[c]); }){
+    return toSentence(fillTemplate(pickRandom(Words.Template), pickMethod));
 }
 
 export default function fillTemplate(text, pickMethod = function(W, c) { return pickRandom(W[c]); }){
