@@ -1,34 +1,41 @@
-import {playSequence, playChord, stop, setVol} from "./sounds.js";
- 
-const randRef = document.getElementById("randomizeRef");
 var ref = 48;//start with c4
-document.getElementById("ref").onclick = function() { PlayKey(ref); }
-document.getElementById("stop").onclick = function() { stop(); }
 
 var guessNotes = [];
 var guessed = [];
 const noteLength = 0.4;
-document.getElementById("generate").onclick = function() { 
-    generateNotes(); 
-    playChord(guessNotes, noteLength); 
-    if(randRef.checked) ref = rndInt(startNote, endNote);
-    else                      ref = 48;//reset to c4
-}
-document.getElementById("playChord").onclick = function() { playChord(guessNotes, noteLength); }
-document.getElementById("playSequ").onclick = function() { playSequence(guessNotes, noteLength); }
 
-const rangeMin = document.getElementById("RangeMin");
-const rangeMax = document.getElementById("RangeMax");
 var startNote = 36;
 var endNote = 73;
-rangeMin.oninput = function() { startNote = Number(rangeMin.value); }
-rangeMax.oninput = function() { endNote = Number(rangeMax.value); }
-document.getElementById("reloadKeyb").onclick = function() { deleteKeyboard(); generateKeyboard(); }
 
+var randRef, rangeMin, rangeMax, keybDiv;
+function onload(){
+    randRef = document.getElementById("randomizeRef");
+    rangeMin = document.getElementById("RangeMin");
+    rangeMax = document.getElementById("RangeMax");
+    volSlide = document.getElementById("volumeSlide");
+    keybDiv = document.getElementById("keyboard");
 
-const volSlide = document.getElementById("volumeSlide");
-volSlide.oninput = function() { setVol(volSlide.value / 100.0 + 0.00001); }
+    document.getElementById("ref").onclick = function() { PlayKey(ref); }
+    document.getElementById("stop").onclick = function() { stop(); }
 
+    document.getElementById("generate").onclick = function() { 
+        generateNotes(); 
+        playChord(guessNotes, noteLength); 
+        if(randRef.checked) ref = rndInt(startNote, endNote);
+        else                      ref = 48;//reset to c4
+    }
+    document.getElementById("playChord").onclick = function() { playChord(guessNotes, noteLength); }
+    document.getElementById("playSequ").onclick = function() { playSequence(guessNotes, noteLength); }
+
+    rangeMin.oninput = function() { startNote = Number(rangeMin.value); }
+    rangeMax.oninput = function() { endNote = Number(rangeMax.value); }
+    document.getElementById("reloadKeyb").onclick = function() { deleteKeyboard(); generateKeyboard(); }
+
+    volSlide.oninput = function() { setVol(volSlide.value / 100.0 + 0.00001); }
+
+    
+    generateKeyboard();
+}
 
 
 const blackKeyLookup = [0,1,0,1,0,0,1,0,1,0,1,0];
@@ -36,7 +43,6 @@ function isBlack(n) { return blackKeyLookup[n%12] == 1;}
 
 
 var keyboard = [];
-var keybDiv = document.getElementById("keyboard");
 function generateKeyboard(){
     const width = keybDiv.offsetWidth / ((endNote-startNote) * 7.0/12 + 1);
     const height = Math.min(width * 4, keybDiv.offsetHeight);
@@ -140,6 +146,3 @@ function generateNotes(){
 function allGuessed(){
     document.getElementById("done").style.visibility = "visible";
 }
-
-
-generateKeyboard();
