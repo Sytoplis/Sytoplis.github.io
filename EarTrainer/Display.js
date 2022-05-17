@@ -1,12 +1,19 @@
 import {playSequence, playChord, stop, setVol} from "./sounds.js";
  
-document.getElementById("c4").onclick = function() { PlayKey(48); }
+const randRef = document.getElementById("randomizeRef");
+var ref = 48;//start with c4
+document.getElementById("ref").onclick = function() { PlayKey(ref); }
 document.getElementById("stop").onclick = function() { stop(); }
 
 var guessNotes = [];
 var guessed = [];
 const noteLength = 0.4;
-document.getElementById("generate").onclick = function() { generateNotes(); playChord(guessNotes, noteLength); }
+document.getElementById("generate").onclick = function() { 
+    generateNotes(); 
+    playChord(guessNotes, noteLength); 
+    if(randRef.value == true) ref = rndInt(startNote, endNote);
+    else                       ref = 48;//reset to c4
+}
 document.getElementById("playChord").onclick = function() { playChord(guessNotes, noteLength); }
 document.getElementById("playSequ").onclick = function() { playSequence(guessNotes, noteLength); }
 
@@ -112,9 +119,7 @@ async function markKey(note, color){
 
 //---------------------------------- Main Game Loop ----------------------------------
 
-function rndInt(min, max) { 
-    return Math.floor(Math.random()*(max-min) + min); 
-}
+function rndInt(min, max) { return Math.floor(Math.random()*(max-min) + min); }
 function generateNotes(){
     resetKeyboard();
 
