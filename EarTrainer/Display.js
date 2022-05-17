@@ -11,8 +11,8 @@ const noteLength = 0.4;
 document.getElementById("generate").onclick = function() { 
     generateNotes(); 
     playChord(guessNotes, noteLength); 
-    if(randRef.value == true) ref = rndInt(startNote, endNote);
-    else                       ref = 48;//reset to c4
+    if(randRef.checked) ref = rndInt(startNote, endNote);
+    else                      ref = 48;//reset to c4
 }
 document.getElementById("playChord").onclick = function() { playChord(guessNotes, noteLength); }
 document.getElementById("playSequ").onclick = function() { playSequence(guessNotes, noteLength); }
