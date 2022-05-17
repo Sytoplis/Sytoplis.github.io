@@ -66,7 +66,7 @@ function keyPress(note){
         markKey(note, "#36c932");
         if(!guessed.includes(note)){//if note wasnt guessed already -> add it to the "already guessed" list
             guessed.push(note);
-            if(guessed.length = guessNotes.length)
+            if(guessed.length == guessNotes.length)
                 allGuessed();
         }
     }else{
