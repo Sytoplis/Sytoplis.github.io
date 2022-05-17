@@ -5,12 +5,21 @@ document.getElementById("stop").onclick = function() { stop(); }
 
 var guessNotes = [];
 var guessed = [];
+const noteLength = 0.4;
 document.getElementById("generate").onclick = function() { generateNotes(); playChord(guessNotes, noteLength); }
 document.getElementById("playChord").onclick = function() { playChord(guessNotes, noteLength); }
 document.getElementById("playSequ").onclick = function() { playSequence(guessNotes, noteLength); }
 
+const rangeMin = document.getElementById("RangeMin");
+const rangeMax = document.getElementById("RangeMax");
+var startNote = 36;
+var endNote = 73;
+rangeMin.oninput = function() { startNote = Number(rangeMin.value); }
+rangeMax.oninput = function() { endNote = Number(rangeMax.value); }
+document.getElementById("reloadKeyb").onclick = function() { deleteKeyboard(); generateKeyboard(); }
 
-var volSlide = document.getElementById("volumeSlide");
+
+const volSlide = document.getElementById("volumeSlide");
 volSlide.oninput = function() { setVol(volSlide.value / 100.0 + 0.00001); }
 
 
@@ -23,7 +32,7 @@ var keyboard = [];
 var keybDiv = document.getElementById("keyboard");
 function generateKeyboard(){
     const width = keybDiv.offsetWidth / ((endNote-startNote) * 7.0/12 + 1);
-    const height = width * 4;
+    const height = Math.min(width * 4, keybDiv.offsetHeight);
 
     const blWidth = width*0.75;
     const blHeight = height*0.75;
@@ -57,6 +66,13 @@ function resetKeyboard(){
 
     for(let k = 0; k < keyboard.length; k++)
         keyboard[k].style.backgroundColor = "";//clear background color -> use color from class
+}
+
+function deleteKeyboard(){
+    while(keyboard.length > 0){
+        let key = keyboard.pop();
+        keybDiv.removeChild(key);
+    }
 }
 
 //------------------------------- Key Input and Output --------------------------------
@@ -96,7 +112,9 @@ async function markKey(note, color){
 
 //---------------------------------- Main Game Loop ----------------------------------
 
-function rndInt(min, max) { return Math.floor(Math.random()*(max-min) + min);}
+function rndInt(min, max) { 
+    return Math.floor(Math.random()*(max-min) + min); 
+}
 function generateNotes(){
     resetKeyboard();
 
@@ -119,7 +137,4 @@ function allGuessed(){
 }
 
 
-const noteLength = 0.4;
-const startNote = 36;
-const endNote = 73;
 generateKeyboard();

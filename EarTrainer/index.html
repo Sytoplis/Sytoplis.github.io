@@ -24,6 +24,15 @@
             <br>
             <br>
 
+            <label class="dark_text">Range:</label>
+            <input type="number" id="RangeMin" value="36" step="1" min="00" max="48">
+            <input type="number" id="RangeMax" value="73" step="1" min="49" max="88">
+            &emsp;
+            <button id="reloadKeyb">reload Keyboard</button>
+
+            <br>
+            <br>
+
             <label class="dark_text" for="volumeSlide">volume:</label>
             <div class="slidecontainer">
                 <!-- https://www.w3schools.com/howto/howto_js_rangeslider.asp -->
@@ -33,8 +42,9 @@
 
         <br>
 
-        <div id="keyboard" style="width:100%; height:500px; position: relative; top:100px"></div>
+        <div id="keyboard" style="width:100%; height:500px; position: relative; top:100px;"></div>
 
+        <br>
         <br>
 
         <h3 id="done" class="dark_text" style="text-align:center; font-size: 60px; visibility:hidden;">Done!</h3>
