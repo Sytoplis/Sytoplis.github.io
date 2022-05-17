@@ -1,0 +1,46 @@
+.backgr{
+    background-color: rgb(2, 2, 2);
+}
+
+.dark_text{
+    color: rgb(243, 243, 243);
+}
+
+.contentDiv{
+    text-align: center;
+    margin: 0 auto;
+    position: relative;
+    top: 100px;
+}
+
+
+.darkKey{
+    background-color: rgb(50, 50, 50);
+    border: 1px solid rgb(255, 255, 255);
+
+    transition-duration: 0.2s;
+    position:absolute;
+    z-index: 2;
+}
+.darkKey:hover{ 
+    background-color: rgb(80, 80, 80); 
+}
+.darkKey:active{ 
+    transform: scaleY(105%) translateY(2.5%); 
+}
+
+
+.whiteKey{
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(50, 50, 50);
+
+    transition-duration: 0.2s;
+    position:absolute;
+    z-index: 1;
+}
+.whiteKey:hover{ 
+    background-color: rgb(200, 200, 200); 
+}
+.whiteKey:active{ 
+    transform: scaleY(105%) translateY(2.5%);
+}
