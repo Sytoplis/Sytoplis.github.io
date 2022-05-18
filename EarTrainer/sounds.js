@@ -58,7 +58,9 @@ async function loadInstr(loadInstr){//e.g.: 'acoustic_grand_piano'
     instr = await Soundfont.instrument(ctx, loadInstr);//load the instrument
 }
 
-async function playInstr(note){ instr.play(noteName(note), 0); }
+async function playInstr(note){ 
+    instr.play(note, 0, {gain: gain.gain.value}); 
+}
 async function stopInstr(){ instr.stop(); }
 
 
