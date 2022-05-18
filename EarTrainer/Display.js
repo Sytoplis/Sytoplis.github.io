@@ -1,3 +1,16 @@
+//stats
+var sumWrong = 0;
+var sumSequPlays = 0;
+var sumRepeats = 0;
+
+var genCount = 0;
+
+var curWrong = 0;
+var curSequPlays = 0;
+var curRepeats = 0;
+//end stats
+
+
 var ref = 48;//start with c4
 
 var guessNotes = [];
@@ -24,8 +37,8 @@ function onload(){
         if(randRef.checked) ref = rndInt(startNote, endNote);
         else                      ref = 48;//reset to c4
     }
-    document.getElementById("playChord").onclick = function() { playChord(guessNotes, noteLength); }
-    document.getElementById("playSequ").onclick = function() { playSequence(guessNotes, noteLength); }
+    document.getElementById("playChord").onclick = function() { playChord(guessNotes, noteLength); curRepeats++; updateStats(); }
+    document.getElementById("playSequ").onclick = function() { playSequence(guessNotes, noteLength); curSequPlays++; updateStats(); }
 
     rangeMin.oninput = function() { startNote = Number(rangeMin.value); }
     rangeMax.oninput = function() { endNote = Number(rangeMax.value); }
@@ -75,6 +88,7 @@ function generateKeyboard(){
 }
 
 function resetKeyboard(){
+    finishRound();
     document.getElementById("done").style.visibility = "hidden";
 
     for(let k = 0; k < keyboard.length; k++)
@@ -100,6 +114,8 @@ function keyPress(note){
         }
     }else{
         markKey(note, "#c93232");
+        curWrong++;
+        updateStats();
     }
 }
 
@@ -145,4 +161,33 @@ function generateNotes(){
 
 function allGuessed(){
     document.getElementById("done").style.visibility = "visible";
+}
+
+//------------------------------- Stats ----------------------------------
+
+function updateStats(){
+    document.getElementById("curRepeats").innerHTML = "Repeats: " + curRepeats;
+    document.getElementById("curSequ").innerHTML = "Sequencial Plays: " + curSequPlays;
+    document.getElementById("curWrong").innerHTML = "Wrong Guesses: " + curWrong;
+
+    if(genCount == 0)
+        return;
+
+    document.getElementById("avrgRepeats").innerHTML = "Repeats: " + (sumRepeats / genCount).toFixed(2);
+    document.getElementById("avrgSequ").innerHTML = "Sequencial Plays: " + (sumSequPlays / genCount).toFixed(2);
+    document.getElementById("avrgWrong").innerHTML = "Wrong Guesses: " + (sumWrong / genCount).toFixed(2);
+
+    document.getElementById("genCount").innerHTML = "Generation Count: " + genCount;
+}
+
+function finishRound(){
+    sumRepeats += curRepeats;
+    sumSequPlays += curSequPlays;
+    sumWrong += curWrong;
+    genCount++;
+
+    curRepeats = 0;
+    curSequPlays = 0;
+    curWrong = 0;
+    updateStats();
 }
