@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <script src="./scripts/Display.js"></script>
+
+        <link rel="stylesheet" href="./main.css">           <!-- load the css data for the text -->
+    </head>
+    <body class="backgr" onload="onload()" onresize="onresize()">
+        <canvas id="canvas" class="screenCanvas"></canvas>
+
+        <div>
+            <div class="divGrid">
+                <label style="grid-area: 1 / 1 / 1 / 2; text-align: center;" class="dark_text cell" for="mul" >Multiplier:</label>
+                <label style="grid-area: 2 / 1 / 2 / 2; text-align: center" class="dark_text cell" for="mod">Modulus:</label>
+
+                <input style="grid-area: 1 / 2 / 1 / 3; width:60px;" class="cell" id="mul" type="number" step="1" value="2"></input>
+                <input style="grid-area: 2 / 2 / 2 / 3; width:60px;" class="cell" id="mod" type="number" min="0" max="10000" step="1" value="9"></input>
+            
+                <label style="grid-area: 1 / 3 / 1 / 4; width:80px; text-align: center;" class="dark_text cell">Animation:</label>
+                <input style="grid-area: 1 / 4 / 1 / 5; width:60px;" class="cell" id="mulSpeed" type="number" step="0.5" value="1"></input>
+                <input style="grid-area: 1 / 5 / 1 / 6; width:25px;" class="cell" id="animMul" type="checkbox"></input>
+
+                <label style="grid-area: 2 / 3 / 2 / 4; width:80px; text-align: center;" class="dark_text cell">Animation:</label>
+                <input style="grid-area: 2 / 4 / 2 / 5; width:60px;" class="cell" id="modSpeed" type="number" step="0.5" value="1"></input>
+                <input style="grid-area: 2 / 5 / 2 / 6; width:25px;" class="cell" id="animMod" type="checkbox"></input>
+            </div>
+
+            <div>
+                <label for="color" class="dark_text">Color:</label>
+                <input type="checkbox" id="color" checked></input>
+                &emsp;
+                <label for="circle" class="dark_text">Circle:</label>
+                <input type="checkbox" id="circle" checked></input>
+            </div>
+            
+        </div>
+    </body>
+</html>
