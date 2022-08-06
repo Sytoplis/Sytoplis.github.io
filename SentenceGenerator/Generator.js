@@ -2,6 +2,8 @@
 //Verb-Source: https://www.englishbix.com/verb-forms-v1-v2-v3-list/
 //Adjective-Source: https://www.mobap.edu/wp-content/uploads/2013/01/list_of_adjectives.pdf
 
+//Created on 6.5.2022 (and the following week) by Yannis Paul
+
 export default class Generator{
 
     Words;

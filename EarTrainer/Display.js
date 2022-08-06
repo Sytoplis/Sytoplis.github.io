@@ -1,3 +1,5 @@
+//Created on the 17.05.2022 (and the following days) by Yannis Paul 
+
 //stats
 var sumWrong = 0;
 var sumSequPlays = 0;
