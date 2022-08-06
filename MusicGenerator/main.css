@@ -1,0 +1,14 @@
+.backgr{
+    background-color: rgb(2, 2, 2);
+}
+
+.dark_text{
+    color: rgb(243, 243, 243);
+}
+
+.contentDiv{
+    text-align: center;
+    margin: 0 auto;
+    position: relative;
+    top: 50px;
+}

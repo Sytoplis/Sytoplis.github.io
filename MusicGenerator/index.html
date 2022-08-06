@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <script type="text/javascript" src="./Lib/soundfont-player.min.js"></script>
+        <script type="text/javascript" src="./Lib/sounds.js"></script>
+        <script type="text/javascript" src="./Display.js"></script>
+        <link rel="stylesheet" href="./main.css">
+    </head>
+
+    <body class="backgr" onload="onload();">
+        <h1 class="dark_text" style="text-align:center;">Music Generator</h1>
+
+        <div class="contentDiv">
+            <br>
+
+            <label class="dark_text" for="volumeSlide">volume:</label>
+            <div class="slidecontainer">
+                <!-- https://www.w3schools.com/howto/howto_js_rangeslider.asp -->
+                <input type="range" min="0" max="100" value="50" class="slider" id="volumeSlide">
+            </div>
+        </div>
+
+    </body>
+</html>
