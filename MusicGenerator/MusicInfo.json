@@ -1,0 +1,28 @@
+{   
+    "Chords" : {
+        "major":{"Notes":["1", "3", "5"]},
+        "m"    :{"Notes":["1", "b3", "5"]},
+        "dim"  :{"Notes":["1", "b3", "b5", "6"]},
+        "+"    :{"Notes":["1", "3", "#5"]},
+        "sus2" :{"Notes":["1", "2", "5"]},
+        "sus4" :{"Notes":["1", "4", "5"]}
+    },
+    "ChordExtensions" : {
+        "maj7":{"Note":"7"},
+        "7"   :{"Note":"b7"}
+    },
+
+    
+    "ChordMovement" : [
+        {
+            "FromChordProperties":"7",
+            "ToChord": "maj7",
+            "ToNote": "4"
+        },
+        {
+            "FromChordProperties":"maj7",
+            "ToChord": "7",
+            "ToNote": "5"
+        }
+    ]
+}
