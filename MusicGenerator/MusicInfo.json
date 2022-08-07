@@ -15,14 +15,69 @@
     
     "ChordMovement" : [
         {
+            "FromChordProperties":"maj7",
+            "ToChord":"m,6",
+            "ToNote":"1"
+        },
+        {
             "FromChordProperties":"7",
-            "ToChord": "maj7",
-            "ToNote": "4"
+            "ToChord":"maj7",
+            "ToNote":"2"
         },
         {
             "FromChordProperties":"maj7",
-            "ToChord": "7",
-            "ToNote": "5"
+            "ToChord":"7",
+            "ToNote":"3"
+        },
+        {
+            "FromChordProperties":"7",
+            "ToChord":"maj7",
+            "ToNote":"4"
+        },
+        {
+            "FromChordProperties":"m,7",
+            "ToChord":"7",
+            "ToNote":"4"
+        },
+        {
+            "FromChordProperties":"m,7",
+            "ToChord":"m,7",
+            "ToNote":"4"
+        },
+        {
+            "FromChordProperties":"m,7",
+            "ToChord":"+",
+            "ToNote":"4"
+        },
+        {
+            "FromChordProperties":"+",
+            "ToChord":"maj7",
+            "ToNote":"4"
+        },
+        {
+            "FromChordProperties":"7,13",
+            "ToChord":"m,7",
+            "ToNote":"4"
+        },
+        {
+            "FromChordProperties":"m,6",
+            "ToChord":"maj7",
+            "ToNote":"5"
+        },
+        {
+            "FromChordProperties":"maj7",
+            "ToChord":"7",
+            "ToNote":"6"
+        },
+        {
+            "FromChordProperties":"maj7",
+            "ToChord":"7,13",
+            "ToNote":"6"
+        },
+        {
+            "FromChordProperties":"maj7",
+            "ToChord":"m,7",
+            "ToNote":"6"
         }
     ]
 }

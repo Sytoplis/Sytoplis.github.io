@@ -5,6 +5,7 @@
 //      - last chord
 //      - chord position (phrases mainly in a multiple of 4)
 //      - spyciness -> dont overuse spice
+//      - IMPORTANT TODO: tonal center
 
 //maybe add different playing modes? -> (arpedgiated, etc...)
 
@@ -20,7 +21,5 @@ async function onload(){
     let volSlide = document.getElementById("volumeSlide")
     volSlide.oninput = function() { setVol(volSlide.value / 100.0 + 0.00001); }
     
-    document.getElementById("generateB").onclick = function() { playChord(gen.generate(), 2); };
+    document.getElementById("generateB").onclick = async function() { await playChord(gen.generate(), 0.4); };
 }
-
-function rndInt(min, max) { return Math.floor(Math.random()*(max-min) + min); }

@@ -82,7 +82,8 @@ async function stop(note){
 
 //------------------------ ADVANCED AUDIO PLAYING --------------------------------
 const NoteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-function noteName(note) { return NoteNames[note%12] + (Math.floor(note/12)).toString(); }
+function noteName(note) { return simpleNoteName(note) + (Math.floor(note/12)).toString(); }
+function simpleNoteName(note) { return NoteNames[note%12]; }
 
 function noteToFreq(note) { return 440 * Math.pow(2, (note - 69) / 12); }//0 -> c0
 
