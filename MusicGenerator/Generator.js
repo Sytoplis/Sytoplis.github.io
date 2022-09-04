@@ -3,7 +3,11 @@ class Generator{
     MusicInfo;
     musicParameters = {
         ChordTone: 0,
-        ChordType: "maj7"
+        ChordType: "maj7",
+        Voicing: [60 + 0, 
+                  60 + 3,
+                  60 + 5,
+                  60 + 7]
     };
 
     constructor(path){
@@ -20,16 +24,22 @@ class Generator{
         this.pickChord();
         let refNote = Soundfont.noteToMidi("d4");//convert the note to a number
         let notes = this.MusicParametersToChordNotes(refNote);
+        voiceLead(this.musicParameters.Voicing, notes);
+        this.musicParameters.Voicing = notes;
+
         this.PrintParameters(refNote);
-        return notes;
+        console.log(this.musicParameters.Voicing);
+        return this.musicParameters.Voicing;
     }
 
     pickChord(){
         //pick a chord based on the one before (TODO: maybe use some kind of regex if neccessary)
         let possibleMoves = [];
+        let weightSum = 0;
         for(let i = 0; i < this.MusicInfo.ChordMovement.length; i++){
             if(this.MusicInfo.ChordMovement[i].FromChordProperties === this.musicParameters.ChordType){//if chord type matches
                 possibleMoves.push(this.MusicInfo.ChordMovement[i]);//add this possibility
+                weightSum += this.MusicInfo.ChordMovement[i].Weight;
             }
         }
 
@@ -38,7 +48,8 @@ class Generator{
             return;
         }
 
-        let move = choose(possibleMoves);
+        //let move = choose(possibleMoves);
+        let move = chooseWeighted(possibleMoves, weightSum, (m) => { return m.Weight; });
 
         //update parameters to play that chord (chord tone, etc.)
         this.musicParameters.ChordType = move.ToChord;
@@ -123,8 +134,54 @@ function RelativeNotesToMidiDistance(note){//input note as a string and get a mi
     return ScaleToNote(scaleNote) + sharps - flats;//"5#" -> 7+1 = 8 -> g# (relative to c)
 }
 
+//------------------------ Music Helper Methods --------------------------------
+
+/**
+ * changes the destNotes, so they fit in with the voice leading
+ * 
+ * @param {Array<int>} lastNotes - the midi-notes that made up the last chord
+ * @param {Array<int>} destNotes - the midi-notes that make up the chord to change to be voice lead
+*/
+function voiceLead(lastNotes, destNotes){
+    for(let n = 0; n < destNotes.length; n++){
+        //find the lastNotes with the least distance to destNotes[n]
+        let min = 13;
+        let minNotes = [];
+        for(let l = 0; l < lastNotes.length; l++){
+            let dist = (lastNotes[l] % 12) - (destNotes[n] % 12);
+            dist = Math.abs(dist);
+            if(min > dist){
+                min = dist;
+                minNotes.length = 0;
+            }
+
+            if(min == dist)
+                minNotes.push(lastNotes[l]);
+        }
+
+
+        //pick a random one and shift the octaves, so it is the acutal distance
+        let leadingNote = choose(minNotes);
+        destNotes[n] = (destNotes[n] % 12) + Math.floor(leadingNote/12.0)*12;
+    }
+}
+
+
+
+
 //------------------------ Math --------------------------------
 function positiveMod(number, mod){ return ((number % mod) + mod) % mod; }
+function rndInt(min, max) { return Math.floor(Math.random()*(max-min) + min); }
 
 function choose(array) { return array[rndInt(0, array.length)]; }
-function rndInt(min, max) { return Math.floor(Math.random()*(max-min) + min); }
+function chooseWeighted(array, weightSum, getWeight){
+    let rnd = Math.random()*weightSum;
+    let currentWeight = 0;
+    for(let i = 0; i < array.length; i++){
+        currentWeight += getWeight(array[i]);
+        if(currentWeight >= rnd)
+            return array[i];
+    }
+    console.warn(`weighted Randomness failed to pick an element`);
+    return array[0];
+}
